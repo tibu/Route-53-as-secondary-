@@ -24,33 +24,35 @@ config = ConfigParser.RawConfigParser()
 SyncClass is where the main parsing of the two DNS sets occurs, it also handles the file lock to prevent multiple
 update from occuring simultaneously and calls into the route53 and dynect python wrappers to get back the necissary information
 '''
+
+
 class SyncClass():
-	cn = ''
-	un = ''
-	pwd = ''
-	accessid = ''
-	secretaccesskey = ''
-	action_level = ''
-	log_file = ''
-	log_byte_size = 0
-	logger = None
-	lockPath = ''
-	# logging.DEBUG, logging.INFO, logging.WARNING, logging.ERROR, logging.CRITICAL
-	log_level = logging.INFO
-	preDefinedSections = {'credentials' : 'y', 'logging' : 'y', 'route53' : 'y', 'general' : 'y'}
-	def __init__(self):
-		config.readfp(open(os.path.join(install_dir, 'dynect.cfg')))
+    cn = ''
+    un = ''
+    pwd = ''
+    accessid = ''
+    secretaccesskey = ''
+    action_level = ''
+    log_file = ''
+    log_byte_size = 0
+    logger = None
+    lockPath = ''
+    # logging.DEBUG, logging.INFO, logging.WARNING, logging.ERROR, logging.CRITICAL
+    log_level = logging.INFO
+    preDefinedSections = {'credentials' : 'y', 'logging' : 'y', 'route53' : 'y', 'general' : 'y'}
+    def __init__(self):
+        config.readfp(open(os.path.join(install_dir, 'dynect.cfg')))
 		
-		self.cn = config.get('credentials', 'cn')
-		self.un = config.get('credentials', 'un')
-		self.pwd = config.get('credentials', 'pwd')
+        self.cn = config.get('credentials', 'cn')
+        self.un = config.get('credentials', 'un')
+        self.pwd = config.get('credentials', 'pwd')
 	
-		self.accessid = config.get('route53', 'access_id')
-		self.secretaccesskey = config.get('route53', 'secret_access_key')
-	
-		self.log_file = config.get('logging', 'log_file')
-		string_size = config.get('logging', 'log_byte_size')
-		llevel = config.get('logging', 'log_level')
+        self.accessid = config.get('route53', 'access_id')
+        self.secretaccesskey = config.get('route53', 'secret_access_key')
+
+        self.log_file = config.get('logging', 'log_file')
+        string_size = config.get('logging', 'log_byte_size')
+        llevel = config.get('logging', 'log_level')
 		
 		self.lockPath = config.get('general', 'lock_path')
 		
